@@ -1,7 +1,7 @@
 truthlensai_app
 app.py          # Your Streamlit code
 assets
-     logo.png    # Your logo file
+logo.png    # Your logo file
 st.image("assets/logo.png", width=150)
 git add app.py assets/logo.png
 git commit -m "Add logo to app"
