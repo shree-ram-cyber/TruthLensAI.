@@ -1,3 +1,8 @@
+truthlensai_app/
+│
+├── app.py          <-- Streamlit code below
+└── assets/
+    └── logo.png    <-- your logo file
 import streamlit as st
 from datetime import datetime
 import os
@@ -75,7 +80,10 @@ with st.container():
 
     # ---------- LOGO ----------
     logo_path = os.path.join("assets", "logo.png")
-    st.image(logo_path, width=150)
+    if os.path.exists(logo_path):
+        st.image(logo_path, width=150)
+    else:
+        st.warning("Logo not found! Make sure assets/logo.png exists.")
 
     # ---------- TITLE & SUBTITLE ----------
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
@@ -102,4 +110,3 @@ with st.container():
         st.success(f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍")
     
     st.markdown('</div>', unsafe_allow_html=True)
-
