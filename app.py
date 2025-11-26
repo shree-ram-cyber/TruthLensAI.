@@ -1,13 +1,6 @@
-truthlensai_app
-app.py          # Your Streamlit code
-assets
-logo.png    # Your logo file
-st.image("assets/logo.png", width=150)
-git add app.py assets/logo.png
-git commit -m "Add logo to app"
-git push
 import streamlit as st
 from datetime import datetime
+import os
 
 # ---------- PAGE CONFIG ----------
 st.set_page_config(
@@ -81,7 +74,8 @@ with st.container():
     st.markdown('<div class="card">', unsafe_allow_html=True)
 
     # ---------- LOGO ----------
-    st.image("assets/logo.png", width=150)
+    logo_path = os.path.join("assets", "logo.png")
+    st.image(logo_path, width=150)
 
     # ---------- TITLE & SUBTITLE ----------
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
