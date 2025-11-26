@@ -101,7 +101,7 @@ with st.container():
     gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
     
     # Platform input
-    platform = st.selectbox("Select the platform where you found the news:", ["Instagram", "YouTube", "Facebook", "X"])
+    platform = st.selectbox("Select the platform where you found the news:", ["Instagram", "YouTube", "Facebook", "X", "News Channel"])
     
     st.write("---")
     
