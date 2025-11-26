@@ -12,9 +12,9 @@ st.set_page_config(
 # ---------- CUSTOM CSS ----------
 st.markdown("""
 <style>
-/* Gradient background - soft purple/pink */
+/* Subtle gradient background */
 [data-testid="stAppViewContainer"] {
-    background: linear-gradient(135deg, #d4c1ec, #fbc2eb);
+    background: linear-gradient(135deg, #f0e5f9, #fceff9);
     color: #333;
 }
 
@@ -23,7 +23,7 @@ st.markdown("""
     background: rgba(255, 255, 255, 0.85);
     padding: 2rem;
     border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     max-width: 700px;
     margin: auto;
 }
@@ -58,7 +58,7 @@ h3 {
 }
 
 /* Input styling */
-.stRadio > div, .stSelectbox > div {
+.stTextInput > div, .stRadio > div, .stSelectbox > div {
     background-color: rgba(255,255,255,0.9);
     border-radius: 10px;
     padding: 0.5rem;
@@ -70,10 +70,14 @@ h3 {
 with st.container():
     st.markdown('<div class="card">', unsafe_allow_html=True)
 
-    st.markdown("<h1>Creativity Never Ends</h1>", unsafe_allow_html=True)
-    st.markdown("<h3>Detect fake news and explore insights with TruthLensAI</h3>", unsafe_allow_html=True)
+    # Title
+    st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
+    st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
     
     st.write("---")
+    
+    # Headline input
+    headline = st.text_input("Enter the news headline here:")
     
     # Gender input
     gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
@@ -88,8 +92,9 @@ with st.container():
     
     # Submit button
     if st.button("Analyze News"):
-        st.success(f"Analyzing news from **{platform}** for **{gender}** user... 🔍")
+        st.success(f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍")
     
     st.markdown('</div>', unsafe_allow_html=True)
+
 
 
