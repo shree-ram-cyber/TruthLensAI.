@@ -71,6 +71,16 @@ h3 {
 input::placeholder {
     color: #e0e0e0;
 }
+
+/* Radio & select options text color */
+.css-1okebmr option, .stRadio div, .stSelectbox div {
+    color: #ffffff;
+}
+
+/* Label text */
+label {
+    color: #ffffff !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
