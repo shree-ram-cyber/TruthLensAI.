@@ -1,73 +1,98 @@
 import streamlit as st
+from datetime import datetime
 
-# --- Page Config ---
-st.set_page_config(page_title="TruthLensAI", layout="wide", page_icon="📰")
+# ---------- PAGE CONFIG ----------
+st.set_page_config(
+    page_title="TruthLensAI",
+    page_icon="🕵️‍♂️",
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
 
-# --- Custom CSS ---
+# ---------- CUSTOM CSS ----------
 st.markdown("""
-    <style>
-    /* Dark gradient background */
-    body, .main {
-        background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
-        color: #ffffff;
-        font-family: 'Arial', sans-serif;
-    }
+<style>
+/* Subtle gradient background */
+[data-testid="stAppViewContainer"] {
+    background: linear-gradient(135deg, #f0e5f9, #fceff9);
+    color: #333;
+}
 
-    /* Gradient heading style */
-    .big-heading {
-        font-size: 50px;
-        font-weight: bold;
-        background: linear-gradient(45deg, #ff6f3c, #ffa94d);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 20px;
-    }
+/* Card-like container */
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    max-width: 700px;
+    margin: auto;
+}
 
-    /* Input boxes styling */
-    div.stTextInput>div>input, div.stSelectbox>div>div>div>select {
-        background-color: #1a1a1a;
-        color: white;
-        border: 1px solid #ff6f3c;
-        border-radius: 6px;
-        padding: 0.5em;
-        font-size: 18px;
-    }
+/* Headings */
+h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 3rem;
+    background: linear-gradient(to right, #ff8c94, #a18cd1, #fbc2eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-    /* Buttons style */
-    .stButton>button {
-        background-color: #ff6f3c;
-        color: white;
-        border-radius: 8px;
-        padding: 0.5em 1.2em;
-        border: none;
-    }
+h3 {
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+}
 
-    .stButton>button:hover {
-        background-color: #ff4500;
-        color: white;
-    }
+/* Buttons */
+.stButton>button {
+    background-color: #a18cd1;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1.5rem;
+    border-radius: 10px;
+    border: none;
+    transition: 0.3s;
+}
+.stButton>button:hover {
+    background-color: #ff8c94;
+    transform: scale(1.05);
+}
 
-    /* Hide footer */
-    footer {visibility: hidden;}
-    </style>
+/* Input styling */
+.stTextInput > div, .stRadio > div, .stSelectbox > div {
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+</style>
 """, unsafe_allow_html=True)
 
-# --- Heading ---
-st.markdown('<div class="big-heading">TruthLensAI</div>', unsafe_allow_html=True)
-st.markdown("Enter a news headline and select options below:")
+# ---------- APP CONTENT ----------
+with st.container():
+    st.markdown('<div class="card">', unsafe_allow_html=True)
 
-# --- Inputs ---
-headline = st.text_input("Your Headline Here")
-
-col1, col2 = st.columns(2)
-with col1:
-    platform = st.selectbox("Select Platform", ["Instagram", "YouTube", "Facebook"])
-with col2:
-    gender = st.selectbox("Select Gender", ["Male", "Female", "Other"])
-
-# Optional: Show what user entered
-if headline:
-    st.markdown(f"**Headline:** {headline}")
-    st.markdown(f"**Platform:** {platform}")
-    st.markdown(f"**Gender:** {gender}")
+    # Title
+    st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
+    st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
+    
+    st.write("---")
+    
+    # Headline input
+    headline = st.text_input("Enter the news headline here:")
+    
+    # Gender input
+    gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
+    
+    # Platform input
+    platform = st.selectbox("Select the platform where you found the news:", ["Instagram", "YouTube", "Facebook", "Twitter"])
+    
+    st.write("---")
+    
+    # Current date
+    st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
+    
+    # Submit button
+    if st.button("Analyze News"):
+        st.success(f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
