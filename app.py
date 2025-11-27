@@ -137,6 +137,11 @@ with st.container():
 div[role="radiogroup"] label {
     color: #ffffff !important;
 }
+div[role="radiogroup"] div {
+    color: #ffffff !important;
+}
+
+
 
     # ---------- PLATFORM INPUT ----------
     platform = st.selectbox(
