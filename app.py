@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime
+import random
 
 # ---------- PAGE CONFIG ----------
 st.set_page_config(
@@ -80,6 +81,15 @@ div[role="radiogroup"] div {
 label {
     color: #ffffff !important;
 }
+
+/* Tips box styling */
+.tips-box {
+    background-color: rgba(70,70,90,0.9);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    border-left: 5px solid #a18cd1;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -96,6 +106,16 @@ st.session_state.current_page = st.sidebar.selectbox(
     "Go to:", ["Home", "Analyze Headline", "History & Insights"],
     index=["Home", "Analyze Headline", "History & Insights"].index(st.session_state.current_page)
 )
+
+# ---------- ROTATING TIPS ----------
+tips_list = [
+    "💡 Did you know? Over 50% of news shared on social media is never actually read.",
+    "📌 Tip: Check multiple sources before trusting a news headline.",
+    "⚠️ Beware: Sensational headlines are more likely to be fake.",
+    "📰 Fact: Images and videos can be manipulated to spread misinformation.",
+    "🔍 Always verify the publication date and source of the news."
+]
+current_tip = random.choice(tips_list)
 
 # ---------- HOME PAGE ----------
 if st.session_state.current_page == "Home":
@@ -117,6 +137,9 @@ if st.session_state.current_page == "Home":
     - See platform and gender-specific patterns
     - Keep track of analyzed headlines
     """)
+    
+    # Tips box
+    st.markdown(f'<div class="tips-box">{current_tip}</div>', unsafe_allow_html=True)
     
     st.markdown("### How to Use")
     st.markdown("""
