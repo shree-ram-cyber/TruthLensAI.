@@ -1,6 +1,5 @@
 import streamlit as st
 from datetime import datetime
-import os
 
 # ---------- PAGE CONFIG ----------
 st.set_page_config(
@@ -11,13 +10,15 @@ st.set_page_config(
 )
 
 # ---------- CUSTOM CSS ----------
-#for formattig of the app
 st.markdown("""
 <style>
+/* Background gradient */
 [data-testid="stAppViewContainer"] {
     background: linear-gradient(135deg, #1e1e2f, #2c2c3c);
     color: #ffffff;
 }
+
+/* Card container */
 .card {
     background: rgba(40, 40, 55, 0.85);
     padding: 2rem;
@@ -27,6 +28,8 @@ st.markdown("""
     margin: auto;
     color: #ffffff;
 }
+
+/* Heading styles */
 h1 {
     font-family: 'Arial', sans-serif;
     font-size: 3rem;
@@ -39,6 +42,8 @@ h3 {
     font-weight: normal;
     color: #ffffff;
 }
+
+/* Buttons */
 .stButton>button {
     background-color: #a18cd1;
     color: white;
@@ -52,7 +57,9 @@ h3 {
     background-color: #ff8c94;
     transform: scale(1.05);
 }
-.stTextInput > div, .stRadio > div, .stSelectbox > div {
+
+/* Inputs */
+.stTextInput > div, .stSelectbox > div {
     background-color: rgba(60,60,75,0.9);
     border-radius: 10px;
     padding: 0.5rem;
@@ -61,48 +68,92 @@ h3 {
 input::placeholder {
     color: #e0e0e0;
 }
-.css-1okebmr option, .stRadio div, .stSelectbox div {
-    color: #ffffff;
+
+/* Make ONLY gender radio option text white */
+div[role="radiogroup"] > label, 
+div[role="radiogroup"] > div, 
+div[role="radiogroup"] span {
+    color: #ffffff !important;
 }
+
+/* Ensure other labels stay white */
 label {
     color: #ffffff !important;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# ---------- APP CONTENT ----------
-with st.container():
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+# ---------- SESSION STATE FOR HISTORY ----------
+if "history" not in st.session_state:
+    st.session_state.history = []
 
-    # ---------- LOGO ----------
-    logo_path = os.path.join("assets", "logo.png")
-    if os.path.exists(logo_path):
-        st.image(logo_path, width=150)
-    else:
-        st.warning("Logo not found! Make sure assets/logo.png exists.")
+# ---------- PAGE SELECTOR ----------
+page = st.sidebar.selectbox("Navigate to:", ["Home", "Analyze Headline", "History & Insights"])
 
-    # ---------- TITLE & SUBTITLE ----------
+# ---------- HOME PAGE ----------
+if page == "Home":
+    st.image("assets/logo.png", width=150)
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
-    st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
-    
-    st.write("---")
-    
-    # ---------- HEADLINE INPUT ----------
-    headline = st.text_input("Enter the news headline here:")
-    
-    # ---------- GENDER INPUT ----------
-    gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
-    
-    # ---------- PLATFORM INPUT ----------
-    platform = st.selectbox("Select the platform where you found the news:", ["Instagram", "YouTube", "Facebook", "Twitter"])
-    
-    st.write("---")
-    
-    # ---------- DATE ----------
-    st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
-    
-    # ---------- ANALYZE BUTTON ----------
-    if st.button("Analyze News"):
-        st.success(f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍")
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
+    st.markdown("""
+    Welcome to **TruthLensAI**!  
+    This app allows you to:
+    - Enter a news headline
+    - Analyze it for possible fake news indicators
+    - See platform and gender-specific patterns
+    - Keep track of analyzed headlines
+    """)
+    if st.button("Get Started"):
+        page = "Analyze Headline"
+        st.experimental_rerun()
+
+# ---------- ANALYZE HEADLINE PAGE ----------
+elif page == "Analyze Headline":
+    with st.container():
+        st.markdown('<div class="card">', unsafe_allow_html=True)
+        
+        # Logo
+        st.image("assets/logo.png", width=150)
+        
+        # Title & Subtitle
+        st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
+        st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
+        
+        st.write("---")
+        
+        # Headline input
+        headline = st.text_input("Enter the news headline here:")
+        
+        # Gender input
+        gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
+        
+        # Platform input
+        platform = st.selectbox("Select the platform where you found the news:", 
+                                ["Instagram", "YouTube", "Facebook", "Twitter"])
+        
+        st.write("---")
+        
+        # Date
+        st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
+        
+        # Analyze button
+        if st.button("Analyze News"):
+            st.success(f"Analyzing headline: **{headline}**\n\nFrom platform: **{platform}** for **{gender}** user... 🔍")
+            # Store in history
+            st.session_state.history.append({
+                "headline": headline,
+                "gender": gender,
+                "platform": platform,
+                "date": datetime.today().strftime("%d %B %Y")
+            })
+        
+        st.markdown('</div>', unsafe_allow_html=True)
+
+# ---------- HISTORY & INSIGHTS PAGE ----------
+elif page == "History & Insights":
+    st.header("Analysis History")
+    if st.session_state.history:
+        for i, record in enumerate(st.session_state.history, start=1):
+            st.markdown(f"**{i}. {record['headline']}**")
+            st
+
