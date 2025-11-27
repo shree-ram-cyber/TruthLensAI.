@@ -90,6 +90,15 @@ label {
     margin-top: 1rem;
     border-left: 5px solid #a18cd1;
 }
+
+/* FAQ box styling */
+.faq-box {
+    background-color: rgba(70,70,90,0.9);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    border-left: 5px solid #ff8c94;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -117,6 +126,15 @@ tips_list = [
 ]
 current_tip = random.choice(tips_list)
 
+# ---------- FAQ QUESTIONS ----------
+faq = {
+    "What is TruthLensAI?": "TruthLensAI analyzes headlines to detect potential fake news.",
+    "How do I use the app?": "Enter a headline, select gender & platform, click Analyze News.",
+    "Any tips for spotting fake news?": "Check multiple sources, verify images, and watch for sensational language.",
+    "Can I see previous headlines?": "Yes! Navigate to the 'History & Insights' page to see past analyses.",
+    "Why is gender and platform asked?": "These inputs help show patterns and insights in how news spreads across demographics."
+}
+
 # ---------- HOME PAGE ----------
 if st.session_state.current_page == "Home":
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
@@ -141,6 +159,7 @@ if st.session_state.current_page == "Home":
     # Tips box
     st.markdown(f'<div class="tips-box">{current_tip}</div>', unsafe_allow_html=True)
     
+    # How to use section
     st.markdown("### How to Use")
     st.markdown("""
     1. Navigate to **Analyze Headline** page or click the button above.  
@@ -150,6 +169,12 @@ if st.session_state.current_page == "Home":
     5. Click **Analyze News** to see insights.  
     6. Check **History & Insights** page to view previously analyzed headlines.
     """)
+    
+    # FAQ section
+    st.markdown("### Frequently Asked Questions")
+    question = st.selectbox("Click a question to get the answer:", ["Select a question"] + list(faq.keys()))
+    if question in faq:
+        st.markdown(f'<div class="faq-box">{faq[question]}</div>', unsafe_allow_html=True)
 
 # ---------- ANALYZE HEADLINE PAGE ----------
 elif st.session_state.current_page == "Analyze Headline":
