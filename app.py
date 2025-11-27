@@ -11,6 +11,7 @@ st.set_page_config(
 )
 
 # ---------- CUSTOM CSS ----------
+#for formattig of the app
 st.markdown("""
 <style>
 [data-testid="stAppViewContainer"] {
