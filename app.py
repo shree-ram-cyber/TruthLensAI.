@@ -101,6 +101,14 @@ st.session_state.current_page = st.sidebar.selectbox(
 if st.session_state.current_page == "Home":
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
     st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
+    
+    # Button to jump to Analyze Headline page at top
+    if st.button("Go to Analyze Headline"):
+        st.session_state.current_page = "Analyze Headline"
+    
+    st.markdown("---")
+    
+    # Description
     st.markdown("""
     Welcome to **TruthLensAI**!  
     This app allows you to:
@@ -109,8 +117,16 @@ if st.session_state.current_page == "Home":
     - See platform and gender-specific patterns
     - Keep track of analyzed headlines
     """)
-    if st.button("Get Started"):
-        st.session_state.current_page = "Analyze Headline"
+    
+    st.markdown("### How to Use")
+    st.markdown("""
+    1. Navigate to **Analyze Headline** page or click the button above.  
+    2. Enter the news headline in the input box.  
+    3. Select your gender.  
+    4. Select the platform where you found the news (Instagram, YouTube, Facebook, Twitter).  
+    5. Click **Analyze News** to see insights.  
+    6. Check **History & Insights** page to view previously analyzed headlines.
+    """)
 
 # ---------- ANALYZE HEADLINE PAGE ----------
 elif st.session_state.current_page == "Analyze Headline":
