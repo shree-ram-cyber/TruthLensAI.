@@ -33,10 +33,6 @@ html, body, [data-testid="stAppViewContainer"] {
     100% { background-position: 0% 50%; }
 }
 
-/* Floating Logo */
-.logo-style {
-    animation: floaty 4s ease-in-out infinite;
-}
 
 @keyframes floaty {
     0% { transform: translateY(0px); }
