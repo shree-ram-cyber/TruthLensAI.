@@ -181,7 +181,7 @@ with title_col:
 
 # ---------- ANALYZE HEADLINE ----------
 elif st.session_state.current_page == "Analyze Headline":
-    with st.container():
+  with st.container():
         st.markdown('<div class="card">', unsafe_allow_html=True)
 
         # ⭐ LOGO + TITLE SIDE BY SIDE ⭐
