@@ -219,8 +219,8 @@ with title_col:
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- HISTORY PAGE ----------
-elif st.session_state.current_page == "History & Insights":
-    st.header("Analysis History")
+    elif st.session_state.current_page == "History & Insights":
+        st.header("Analysis History")
 
     if st.session_state.history:
         for i, record in enumerate(st.session_state.history, start=1):
