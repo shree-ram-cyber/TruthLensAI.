@@ -1,8 +1,6 @@
 import streamlit as st
 from datetime import datetime
 import random
-import time
-from collections import Counter
 
 # ---------- PAGE CONFIG ----------
 st.set_page_config(
@@ -72,28 +70,28 @@ input::placeholder {
     color: #e0e0e0;
 }
 
-/* Gender radio text */
+/* Make ONLY gender radio option text white */
 div[role="radiogroup"] label, 
 div[role="radiogroup"] span, 
 div[role="radiogroup"] div {
     color: #ffffff !important;
 }
 
-/* Labels */
+/* Ensure other labels stay white */
 label {
     color: #ffffff !important;
 }
 
 /* Tips box styling */
 .tips-box {
-    background-color: rgba(70,70,90,0.9);
+    background-color: rgba(255,255,255,0.12);
     padding: 1rem;
     border-radius: 10px;
     margin-top: 1rem;
     border-left: 5px solid #a18cd1;
 }
 
-/* FAQ box */
+/* FAQ box styling */
 .faq-box {
     background-color: rgba(70,70,90,0.9);
     padding: 1rem;
@@ -102,22 +100,12 @@ label {
     border-left: 5px solid #ff8c94;
 }
 
-/* White translucent box */
-.white-box {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 1.2rem;
-    border-radius: 12px;
+/* How To Use translucent white box */
+.htu-box {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 1rem;
+    border-radius: 10px;
     margin-top: 1rem;
-    backdrop-filter: blur(5px);
-}
-
-/* Reaction bar */
-.reaction-box {
-    margin-top: 1rem;
-    padding: 0.8rem;
-    background: rgba(255,255,255,0.1);
-    border-radius: 12px;
-    text-align: center;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -129,14 +117,14 @@ if "history" not in st.session_state:
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Home"
 
-# ---------- SIDEBAR NAVIGATION ----------
+# ---------- SIDEBAR ----------
 st.sidebar.title("Navigation")
 st.session_state.current_page = st.sidebar.selectbox(
     "Go to:", ["Home", "Analyze Headline", "History & Insights"],
     index=["Home", "Analyze Headline", "History & Insights"].index(st.session_state.current_page)
 )
 
-# ---------- ROTATING TIPS ----------
+# ---------- TIPS ----------
 tips_list = [
     "💡 Did you know? Over 50% of news shared on social media is never actually read.",
     "📌 Tip: Check multiple sources before trusting a news headline.",
@@ -152,133 +140,97 @@ faq = {
     "How do I use the app?": "Enter a headline, select gender & platform, click Analyze News.",
     "Any tips for spotting fake news?": "Check multiple sources, verify images, and watch for sensational language.",
     "Can I see previous headlines?": "Yes! Navigate to the 'History & Insights' page to see past analyses.",
-    "Why is gender and platform asked?": "These inputs help show patterns and insights in how news spreads across demographics."
+    "Why is gender and platform asked?": "These inputs help show patterns in how news spreads across demographics."
 }
 
 # ---------- HOME PAGE ----------
 if st.session_state.current_page == "Home":
-
-    st.image("logo.png", width=90)
-    st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
+    
+    # ⭐ LOGO + TITLE SIDE BY SIDE ⭐
+    st.markdown(
+        """
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="logo.png" width="60" style="border-radius: 8px;">
+            <h1 style="margin: 0; padding: 0;">TruthLensAI</h1>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
-    
+
     if st.button("Go to Analyze Headline"):
         st.session_state.current_page = "Analyze Headline"
-    
+
     st.markdown("---")
-    
-    st.markdown("""
-    Welcome to **TruthLensAI**!  
-    This app allows you to:
-    - Enter a news headline  
-    - Analyze it for possible fake news indicators  
-    - See platform and gender-specific patterns  
-    - Keep track of analyzed headlines  
-    """)
 
     st.markdown(f'<div class="tips-box">{current_tip}</div>', unsafe_allow_html=True)
 
+    # ⭐ HOW TO USE BOX ⭐
     st.markdown("""
-    <div class="white-box">
+    <div class="htu-box">
         <h3>How to Use</h3>
-        <p>
-        1. Navigate to <b>Analyze Headline</b>.<br>
-        2. Enter a news headline.<br>
-        3. Select your gender & platform.<br>
-        4. Click <b>Analyze News</b>.<br>
-        5. View past results in <b>History & Insights</b>.<br>
-        </p>
+        1. Navigate to <b>Analyze Headline</b>. <br>
+        2. Enter the news headline. <br>
+        3. Select gender & platform. <br>
+        4. Click <b>Analyze News</b>. <br>
+        5. View past analyses in <b>History & Insights</b>. <br>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("### Frequently Asked Questions")
-    selected_question = st.selectbox("Click a question to get the answer:", ["Select a question"] + list(faq.keys()))
-
+    question_list = ["Select a question"] + list(faq.keys())
+    selected_question = st.selectbox("Click a question to get the answer:", question_list)
     if selected_question != "Select a question":
         st.markdown(f'<div class="faq-box">{faq[selected_question]}</div>', unsafe_allow_html=True)
 
-# ---------- ANALYZE HEADLINE PAGE ----------
+# ---------- ANALYZE HEADLINE ----------
 elif st.session_state.current_page == "Analyze Headline":
     with st.container():
         st.markdown('<div class="card">', unsafe_allow_html=True)
 
-        st.image("logo.png", width=90)
-        st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
+        # ⭐ LOGO + TITLE SIDE BY SIDE ⭐
+        st.markdown(
+            """
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <img src="logo.png" width="60" style="border-radius: 8px;">
+                <h1 style="margin: 0; padding: 0;">TruthLensAI</h1>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
         st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
-        
+
         st.write("---")
-        
+
         headline = st.text_input("Enter the news headline here:")
         gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
-        platform = st.selectbox("Select the platform where you found the news:", 
-                                ["Instagram", "YouTube", "Facebook", "Twitter"])
-        
+        platform = st.selectbox("Select the platform where you found the news:",
+                                ["Instagram", "YouTube", "Facebook", "X", "News Channel", "News Channel"])
+
         st.write("---")
         st.markdown(f"**Date:** {datetime.today().strftime('%d %B %Y')}")
 
-        # ---------- FAKE LOADING + ANALYSIS ----------
         if st.button("Analyze News"):
-            with st.spinner("Scanning the news... 🔎"):
-                time.sleep(1.2)
-
             st.success(f"Analyzing headline: **{headline}**\n\nPlatform: **{platform}** | Gender: **{gender}** 🔍")
-
             st.session_state.history.append({
                 "headline": headline,
                 "gender": gender,
                 "platform": platform,
-                "date": datetime.today().strftime("%d %B %Y"),
-                "reaction": None
+                "date": datetime.today().strftime("%d %B %Y")
             })
-
-            # ---------- REACTION BAR ----------
-            st.markdown('<div class="reaction-box">React to this analysis:</div>', unsafe_allow_html=True)
-            cols = st.columns(5)
-            reactions = ["❤️", "👍", "🤔", "😑", "⚠️"]
-            keys = ["love", "like", "ok", "not good", "very bad"]
-
-            for i, r in enumerate(reactions):
-                if cols[i].button(r):
-                    st.session_state.history[-1]["reaction"] = r
-                    st.success(f"You reacted: {r}")
 
         st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- HISTORY PAGE ----------
 elif st.session_state.current_page == "History & Insights":
     st.header("Analysis History")
-    
+
     if st.session_state.history:
-        
-        # ------- STATS BAR -------
-        platforms = [h["platform"] for h in st.session_state.history]
-        genders = [h["gender"] for h in st.session_state.history]
-
-        most_platform = Counter(platforms).most_common(1)[0][0]
-        most_gender = Counter(genders).most_common(1)[0][0]
-
-        st.markdown("""
-        <div class="white-box">
-            <h3>📊 Overall Stats</h3>
-        """, unsafe_allow_html=True)
-
-        st.write(f"**Total headlines analyzed:** {len(st.session_state.history)}")
-        st.write(f"**Most common platform:** {most_platform}")
-        st.write(f"**Most common gender:** {most_gender}")
-
-        st.markdown("</div>", unsafe_allow_html=True)
-
-        st.write("---")
-
-        # ------- INDIVIDUAL HISTORY -------
         for i, record in enumerate(st.session_state.history, start=1):
             st.markdown(f"**{i}. {record['headline']}**")
             st.markdown(f"Platform: {record['platform']} | Gender: {record['gender']} | Date: {record['date']}")
-            
-            if record["reaction"]:
-                st.markdown(f"Reaction: {record['reaction']}")
-
             st.markdown("---")
     else:
         st.info("No headlines analyzed yet!")
