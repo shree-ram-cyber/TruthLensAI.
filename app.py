@@ -197,7 +197,7 @@ with logo_col:
 
 with title_col:
     st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
-        st.write("---")
+    st.write("---")
 
         headline = st.text_input("Enter the news headline here:")
         gender = st.radio("Select your gender:", ["Male", "Female", "Other"])
