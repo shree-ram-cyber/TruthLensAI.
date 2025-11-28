@@ -146,18 +146,14 @@ faq = {
 # ---------- HOME PAGE ----------
 if st.session_state.current_page == "Home":
     
-    # ⭐ LOGO + TITLE SIDE BY SIDE ⭐
-    st.markdown(
-        """
-        <div style="display: flex; align-items: center; gap: 12px;">
-            <img src="logo.png" width="60" style="border-radius: 8px;">
-            <h1 style="margin: 0; padding: 0;">TruthLensAI</h1>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    # LOGO + HEADING SIDE BY SIDE
+logo_col, title_col = st.columns([1, 6])
 
-    st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
+with logo_col:
+    st.image("logo.png", width=55)
+
+with title_col:
+    st.markdown("<h1>TruthLensAI</h1>", unsafe_allow_html=True)
 
     if st.button("Go to Analyze Headline"):
         st.session_state.current_page = "Analyze Headline"
