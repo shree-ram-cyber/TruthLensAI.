@@ -150,22 +150,9 @@ faq = {
 }
 
 # ---------- HOME ----------
-if st.session_state.current_page == "Home":
-
-    # Title row (logo + heading)
-    left, right = st.columns([1, 5])
-
-    with left:
-        st.image("logo.jpg", width=70)
-
-    with right:
-        st.markdown(
-            "<h1 style='margin-top: 10px; background: linear-gradient(to right, #ff8c94, #a18cd1, #fbc2eb); "
-            "-webkit-background-clip: text; -webkit-text-fill-color: transparent;'>TruthLensAI</h1>",
-            unsafe_allow_html=True
-        )
-
-    st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
+ if st.session_state.current_page == "Home": 
+     st.markdown(""" <div class="title-row"> <img src="logo.jpg" width="70"> <h1>TruthLensAI</h1> </div> """, unsafe_allow_html=True)
+     st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
 
 
     if st.button("Go to Analyze Headline"):
@@ -206,18 +193,12 @@ elif st.session_state.current_page == "Analyze Headline":
     with st.container():
         st.markdown('<div class="card">', unsafe_allow_html=True)
 
-        # Title Row (Logo + Heading)
-col1, col2 = st.columns([1, 5])
-
-with col1:
-    st.image("logo.jpg", width=70)
-
-with col2:
-    st.markdown(
-        "<h1 style='margin-top: 10px; background: linear-gradient(to right, #ff8c94, #a18cd1, #fbc2eb); "
-        "-webkit-background-clip: text; -webkit-text-fill-color: transparent;'>TruthLensAI</h1>",
-        unsafe_allow_html=True
-    )
+       st.markdown("""
+        <div class="title-row">
+            <img src="logo.jpg" width="70">
+            <h1>TruthLensAI</h1>
+        </div>
+        """, unsafe_allow_html=True)
 
         st.markdown("<h3>Detect fake news and explore insights</h3>", unsafe_allow_html=True)
         st.write("---")
