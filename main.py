@@ -258,7 +258,7 @@ elif st.session_state.current_page == "Analyze Headline":
             st.markdown("### Feedback")
             feedback = st.text_area("Your thoughts:")
             if st.button("Submit Feedback"):
-                st.success("Thanks for your feedback! ❤️")
+                st.success("Thanks for your feedback! ")
             st.markdown('</div>', unsafe_allow_html=True)
 
         st.markdown('</div>', unsafe_allow_html=True)
