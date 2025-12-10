@@ -150,10 +150,15 @@ faq = {
 }
 
 # ---------- HOME ----------
- if st.session_state.current_page == "Home": 
-     st.markdown(""" <div class="title-row"> <img src="logo.jpg" width="70"> <h1>TruthLensAI</h1> </div> """, unsafe_allow_html=True)
-     st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
+if st.session_state.current_page == "Home":
+    st.markdown("""
+    <div class="title-row">
+        <img src="logo.jpg" width="70">
+        <h1>TruthLensAI</h1>
+    </div>
+    """, unsafe_allow_html=True)
 
+    st.markdown("<h3>Detect fake news and explore insights!</h3>", unsafe_allow_html=True)
 
     if st.button("Go to Analyze Headline"):
         st.session_state.current_page = "Analyze Headline"
@@ -193,7 +198,7 @@ elif st.session_state.current_page == "Analyze Headline":
     with st.container():
         st.markdown('<div class="card">', unsafe_allow_html=True)
 
-       st.markdown("""
+        st.markdown("""
         <div class="title-row">
             <img src="logo.jpg" width="70">
             <h1>TruthLensAI</h1>
