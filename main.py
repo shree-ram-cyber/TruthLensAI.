@@ -200,7 +200,7 @@ elif st.session_state.current_page == "Analyze Headline":
 
         st.markdown("""
         <div class="title-row">
-            <img src="logo.png.png" width="70">
+            <img src="logo.jpg" width="70">
             <h1>TruthLensAI</h1>
         </div>
         """, unsafe_allow_html=True)
